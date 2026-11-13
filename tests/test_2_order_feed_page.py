@@ -3,8 +3,6 @@ import allure
 from data import Urls, Pages
 from pages.constructor_page import ConstructorPage
 from pages.order_page import OrderFeedPage
-from locators.constructor_locators import ConstructorLocators as CL
-from selenium.webdriver.common.by import By 
 
 class TestOrderFeedPage:
 
