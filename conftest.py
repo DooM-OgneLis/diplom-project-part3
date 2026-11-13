@@ -1,13 +1,24 @@
 import pytest
 import generator
+import allure
 from data import Urls
 from selenium import webdriver
 
-@pytest.fixture(scope="function")
-def driver():
-    #driver = webdriver.Firefox()
-    driver = webdriver.Chrome()
+@pytest.fixture(scope="function", params=["chrome", "firefox"], ids=["chrome", "firefox"])
+def driver(request):
+    browser = request.param
+
+    allure.dynamic.label("browser", browser)
+
+    if browser == "chrome":
+        driver = webdriver.Chrome()
+    elif browser == "firefox":
+        driver = webdriver.Firefox()
+    else:
+        raise ValueError(f"Неизвестный браузер: {browser}")
+    
     driver.get(Urls.STELLARBURGERS)
+
     yield driver
     driver.quit()
 
@@ -30,5 +41,9 @@ def registration_user(driver):
     try:
         UA.delete_user(reqest.json()['accessToken'])
     except Exception as e:
-        print(f"[Cleanup] Ошибка удаления: {e}")
+            allure.attach(
+                body=f"Ошибка при удалении пользователя: {e!r}",
+                name="Ошибка очистки (teardown)",
+                attachment_type=allure.attachment_type.TEXT,
+            )
 

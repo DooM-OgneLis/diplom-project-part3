@@ -12,3 +12,7 @@ class Pages:
 
 class Constant:
     PST_DOMAIN = ['ya.ru', 'yandex.ru', 'google.com', 'yahoo.com', 'mail.ru']
+    PAGE_H_TEXT = {
+        'Конструктор': 'Соберите бургер',
+        'Заказы': 'Лента заказов'
+    }

@@ -55,6 +55,10 @@ class BasePage:
         element = self.find_element_with_wait(locator)
         self.driver.execute_script("arguments[0].scrollIntoView({block: 'center', inline: 'center'});", element)
 
+    @allure.step("перретянуть из А в Б")
+    def drag_and_drop_to_element(self, dstart, dend):
+        AC(self.driver).drag_and_drop(dstart, dend).perform()
+    
     @allure.step("Вернуть текст элемента")
     def get_text_to_elements(self, locator):
         return self.find_element_with_wait(locator).text
@@ -75,4 +79,7 @@ class BasePage:
     def click_on_order_constructor_button(self, type_click = 'base'):
         return self.click_element_with_wait(BPL.BUTTON_CONSTRUCTOR_PAGE, type_click)
 
-    
+    @allure.step("Найти заголовок страницы и вернуть текст")
+    def search_h_tag_text(self):
+        text = self.get_text_to_elements(BPL.FIRST_H_TAG)
+        return text
